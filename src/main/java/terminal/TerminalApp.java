@@ -1,21 +1,24 @@
 package terminal;
 
 import asciiPanel.AsciiPanel;
-import terminal.constant.Commands;
+import commands.Command;
 import terminal.constant.Constants;
 import terminal.screen.Screen;
 import terminal.screen.TerminalScreen;
-import terminal.shell.Command;
+import utils.CommandUtils;
 import utils.KeyboardUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
+import java.util.List;
 
 public class TerminalApp extends JFrame implements KeyListener {
 
 	private AsciiPanel terminal;
 	private Screen screen;
+	private Set<? extends Command> commands;
 
 	public TerminalApp() {
 		super();
@@ -40,6 +43,8 @@ public class TerminalApp extends JFrame implements KeyListener {
 		pack();
 		addKeyListener(this);
 		repaint();
+
+		commands = CommandUtils.loadCommands();
 	}
 
 	//TODO: Verificar sintaxe Java 8 para listerners
@@ -83,23 +88,27 @@ public class TerminalApp extends JFrame implements KeyListener {
 	}
 
 	public boolean run() {
-		Command comando = screen.getLastCommand();
+		List<String> tokenLastCommand = screen.getLastCommand();
+		Command command = commands.stream().filter(c -> c.getName().toUpperCase().equals(tokenLastCommand.get(0).toUpperCase())).findFirst().get();
+		command.execute();
 
-		if(comando != null) {
-			executarComando(comando);
-		}
-
+//		Command comando = screen.getLastCommand();
+//
+//		if(comando != null) {
+//			executarComando(comando);
+//		}
+//
 //		String commands = text.toString().replace(">", "");
 //	    saida = shell.executeCommand(commands);
 		return false;
 	}
 
-	private void executarComando(Command comando) {
-		if(comando.getCommandText().equals(Commands.EXIT.getCommand())) {
-//			this.setVisible(false);
-			System.exit(0);
-		}
-	}
+//	private void executarComando(Command comando) {
+//		if(comando.getCommandText().equals(Commands.EXIT.getCommand())) {
+////			this.setVisible(false);
+//			System.exit(0);
+//		}
+//	}
 
 
 	//

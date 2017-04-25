@@ -57,24 +57,22 @@ public class TerminalScreen implements Screen {
 		return this;
 	}
 
-	public Command getLastCommand() {
+	public List<String> getLastCommand() {
 		String linhaComando = textLine.toString();
 
 		if(linhaComando.length() > 1) {
-			List<String> tokens = Arrays.asList(linhaComando.substring(1, linhaComando.length()).split(" "));
+			return Arrays.asList(linhaComando.substring(1, linhaComando.length()).split(" "));
 
-			Commands commands = Commands.valueOfEnum(tokens.get(0));
-
-			if(commands != null) {
-				Command command = new Command();
-				command.setCommandText(tokens.get(0));
-
-				if(tokens.size() > 1) {
-					command.setFlags(tokens.subList(1, tokens.size() - 1));
-				}
-
-				return command;
-			}
+//			if(commands != null) {
+//				Command command = new Command();
+//				command.setCommandText(tokens.get(0));
+//
+//				if(tokens.size() > 1) {
+//					command.setFlags(tokens.subList(1, tokens.size() - 1));
+//				}
+//
+//				return command;
+//			}
 		}
 
 		return null;
