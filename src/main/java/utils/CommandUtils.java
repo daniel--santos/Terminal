@@ -15,8 +15,11 @@ public class CommandUtils {
     }
 
     private static <T extends Command> T carregarCommand(Class<? extends Command> commandClazz) {
-//        T command =
-        return null;
+        T command = EntidadeUtil.instanciarObjeto((Class<T>) commandClazz);
+
+        
+
+        return command;
     }
 
     public static Set<? extends Command> loadCommands() {
