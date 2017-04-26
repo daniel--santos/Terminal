@@ -22,6 +22,6 @@ public @interface CLICommandExecutable {
     String name();
 
     //Flags
-//    String[] flags();
+    String flags() default "";
 
 }

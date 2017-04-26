@@ -75,12 +75,9 @@ public class TerminalApp extends JFrame implements KeyListener {
 	public void keyPressed(KeyEvent keyEvent) {
 		if(KeyboardUtils.isKeyEnter(keyEvent.getKeyCode())) {
 			run();
-			remove(terminal);
-			terminal = new AsciiPanel(Constants.WINDOWS_WIDTH, Constants.WINDOWS_HEIGHT);
-			screen = new TerminalScreen(terminal);
-			add(terminal);
-			pack();
 		} else {
+			//TODO: Tratar teclas especiais
+
 			//Acrescenta as letras ao terminal
 			screen = screen.respondToUserInput(keyEvent);
 		}
@@ -90,6 +87,9 @@ public class TerminalApp extends JFrame implements KeyListener {
 	public boolean run() {
 		List<String> tokenLastCommand = screen.getLastCommand();
 		Command command = commands.stream().filter(c -> c.getName().toUpperCase().equals(tokenLastCommand.get(0).toUpperCase())).findFirst().get();
+		if(tokenLastCommand.size() > 1) {
+//			command.setFlags(tokenLastCommand.subList(1, tokenLastCommand.size()));
+		}
 		command.execute();
 
 //		Command comando = screen.getLastCommand();
@@ -117,4 +117,20 @@ public class TerminalApp extends JFrame implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) { }
+
+	public AsciiPanel getTerminal() {
+		return terminal;
+	}
+
+	public void setTerminal(AsciiPanel terminal) {
+		this.terminal = terminal;
+	}
+
+	public Screen getScreen() {
+		return screen;
+	}
+
+	public void setScreen(Screen screen) {
+		this.screen = screen;
+	}
 }
