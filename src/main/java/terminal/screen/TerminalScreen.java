@@ -38,7 +38,7 @@ public class TerminalScreen implements Screen {
 	}
 
 	public Screen respondToUserInput(KeyEvent key) {
-		if(key.isActionKey()) {
+		if(key.isActionKey() || KeyboardUtils.isKeyShift(key.getKeyCode())) {
 			return this;
 		}
 
@@ -47,7 +47,7 @@ public class TerminalScreen implements Screen {
 			if(textLine.length() > 1) {
 				textLine.deleteCharAt(textLine.length() - 1);
 			}			
-		} 
+		}
 		
 		//Adicionar um caracter
 		else {
@@ -62,17 +62,6 @@ public class TerminalScreen implements Screen {
 
 		if(linhaComando.length() > 1) {
 			return Arrays.asList(linhaComando.substring(1, linhaComando.length()).split(" "));
-
-//			if(commands != null) {
-//				Command command = new Command();
-//				command.setCommandText(tokens.get(0));
-//
-//				if(tokens.size() > 1) {
-//					command.setFlags(tokens.subList(1, tokens.size() - 1));
-//				}
-//
-//				return command;
-//			}
 		}
 
 		return null;

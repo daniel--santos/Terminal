@@ -2,7 +2,6 @@ package terminal;
 
 import asciiPanel.AsciiPanel;
 import commands.Command;
-import terminal.constant.Constants;
 import terminal.screen.Screen;
 import terminal.screen.TerminalScreen;
 import utils.CommandUtils;
@@ -16,8 +15,8 @@ import java.util.List;
 
 public class TerminalApp extends JFrame implements KeyListener {
 
-	private AsciiPanel terminal;
-	private Screen screen;
+	public static AsciiPanel terminal;
+	public static Screen screen;
 	private Set<? extends Command> commands;
 
 	public TerminalApp() {
@@ -39,11 +38,19 @@ public class TerminalApp extends JFrame implements KeyListener {
 		//Da set da posição no meio da tela
 		setLocationRelativeTo(null);
 
+		//Adiciona Terminal(JPanel)
 		add(terminal);
+
+		//Dimensiona o panel
 		pack();
+
+		//Adiciona o um listner para as teclas
 		addKeyListener(this);
+
+		//Reconstroi a tela
 		repaint();
 
+		//Carrega os comandos
 		commands = CommandUtils.loadCommands();
 	}
 
@@ -88,30 +95,20 @@ public class TerminalApp extends JFrame implements KeyListener {
 		List<String> tokenLastCommand = screen.getLastCommand();
 		Command command = commands.stream().filter(c -> c.getName().toUpperCase().equals(tokenLastCommand.get(0).toUpperCase())).findFirst().get();
 		if(tokenLastCommand.size() > 1) {
-//			command.setFlags(tokenLastCommand.subList(1, tokenLastCommand.size()));
+			for(String flag : tokenLastCommand.subList(1, tokenLastCommand.size())) {
+				String[] valores = flag.split("=");
+				command.getFlags().put(valores[0], valores[1]);
+			}
+		} else {
+			command.getFlags().clear();
 		}
+
+		command.setTerminalApp(this);
 		command.execute();
 
-//		Command comando = screen.getLastCommand();
-//
-//		if(comando != null) {
-//			executarComando(comando);
-//		}
-//
-//		String commands = text.toString().replace(">", "");
-//	    saida = shell.executeCommand(commands);
 		return false;
 	}
 
-//	private void executarComando(Command comando) {
-//		if(comando.getCommandText().equals(Commands.EXIT.getCommand())) {
-////			this.setVisible(false);
-//			System.exit(0);
-//		}
-//	}
-
-
-	//
 	@Override
 	public void keyReleased(KeyEvent e) { }
 

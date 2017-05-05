@@ -2,6 +2,7 @@ package utils;
 
 import commands.Command;
 import commands.ExitCommand;
+import commands.ResizeCommand;
 import commands.annotations.CLICommandExecutable;
 
 import java.lang.annotation.Annotation;
@@ -15,6 +16,7 @@ public class CommandUtils {
     private static Set<Class<? extends Command>> getCommandsClasses() {
         Set<Class<? extends Command>> commandsClasses = new HashSet<>();
         commandsClasses.add(ExitCommand.class);
+        commandsClasses.add(ResizeCommand.class);
         return commandsClasses;
     }
 

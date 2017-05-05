@@ -8,6 +8,10 @@ public class KeyboardUtils {
         return key == KeyEvent.VK_ENTER;
     }
 
+    public static boolean isKeyShift(Integer key) {
+        return key == KeyEvent.VK_SHIFT;
+    }
+
     public static boolean isBackSpace(Integer key) {
         return key == KeyEvent.VK_BACK_SPACE;
     }

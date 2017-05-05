@@ -1,5 +1,7 @@
 package asciiPanel;
 
+import terminal.constant.Constants;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -205,7 +207,7 @@ public class AsciiPanel extends JPanel {
      * Default size is 80x24.
      */
     public AsciiPanel() {
-        this(80, 24);
+        this(Constants.WINDOWS_WIDTH, Constants.WINDOWS_HEIGHT);
     }
 
     /**

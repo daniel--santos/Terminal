@@ -5,6 +5,7 @@ import terminal.TerminalApp;
 import terminal.screen.Screen;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class Command implements Serializable {
@@ -13,6 +14,10 @@ public abstract class Command implements Serializable {
 
     private String name;
     private Map<String, Object> flags;
+
+    public Command() {
+        flags = new LinkedHashMap<>();
+    }
 
     public abstract void execute();
 
